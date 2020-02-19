@@ -24,8 +24,8 @@ def main(domain, apikey):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-    	print("Usage: python3 {} <domain>".format(sys.argv[0]), file=sys.stderr)
-    	sys.exit(1) 
+    	print("Usage: {} <domain>".format(os.path.basename(__file__), file=sys.stderr))
+    	sys.exit(1)
     domain = sys.argv[1]
     apikeyfile = os.path.expanduser('~/.vtapikey')
     if environ.get('VTAPIKEY'):
