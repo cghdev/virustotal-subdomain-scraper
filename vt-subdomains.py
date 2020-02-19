@@ -24,12 +24,17 @@ def main(domain, apikey):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-    	print("Usage: python3 vt-subdomains.py domain.com", file=sys.stderr)
+    	print("Usage: python3 {} <domain>".format(sys.argv[0]), file=sys.stderr)
     	sys.exit(1) 
     domain = sys.argv[1]
+    apikeyfile = os.path.expanduser('~/.vtapikey')
     if environ.get('VTAPIKEY'):
         apikey = os.environ['VTAPIKEY']
     else:
-        print("VTAPIKEY environment variable not set. Quitting.", file=sys.stderr)
-        sys.exit(1)
+        if os.path.isfile(apikeyfile):
+            with open(apikeyfile, 'r') as fd:
+                apikey = fd.read().strip()
+        else:
+            print("VTAPIKEY environment variable not set and ~/.vtapikey not found. Quitting.", file=sys.stderr)
+            sys.exit(1)
     main(domain, apikey)
